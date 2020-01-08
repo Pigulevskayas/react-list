@@ -8,6 +8,15 @@ function addUser(
   return [...users, userToAdd];
 }
 
+function deleteUser(
+  users, // users array
+  userID // user to delete
+) {
+	users.splice(userID, 1);
+	console.log(users);
+  	return users;
+}
+
 export class UsersList extends React.Component {
   state = {
     // все пользователи
@@ -23,12 +32,23 @@ export class UsersList extends React.Component {
         name: "Oleg",
         phone: "+375259999999"
       }
-    ]
+    ],
+    userToDelete: null,
   };
 
   nextId = 3;
 
   render() {
+  	if (this.state.userToDelete) {
+  		let deleteIndex = this.state.users.findIndex(user => user.id === this.state.userToDelete);
+  		deleteUser(this.state.users, deleteIndex);
+     //    this.state.users.splice(deleteIndex, 1);
+     //    this.setState({
+     //    	// users: 
+	    //     userToDelete: null
+	    // });
+     //    console.log(this.state.users);     
+  	}
 	return (
 		<React.Fragment>
 			<AddUser 
@@ -59,9 +79,20 @@ export class UsersList extends React.Component {
 			  	<tbody>
 			  	 {this.state.users.map((user) => (
 					<tr key={user.id}>
-					  	<th>{user.id}</th>
-					  	<th>{user.name}</th>
-					  	<th>{user.phone}</th>
+					  	<td>{user.id}</td>
+					  	<td>{user.name}</td>
+					  	<td>{user.phone}</td>
+					  	<td>
+					  		<button
+					  			onClick={() => 
+					  				this.setState({
+				                        userToDelete: user.id
+				                    })
+					  			}
+					  		>
+					  			Delete
+							</button>
+					  	</td>
 				  	</tr>
 				  ))}
 			  	</tbody>
