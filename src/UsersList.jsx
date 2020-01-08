@@ -14,15 +14,7 @@ export class UsersList extends React.Component {
         name: "Oleg",
         phone: "+375259999999"
       }
-    ],
-
-    // id задачи, которую сейчас редактируем
-    // если taskToEdit равен null, то видим список задач и форму добавления
-    // если taskToEdit равен какому-то числу, видим форму редактирования задачи с таким id
-    // taskToEdit: null,
-
-    // текущее значение фильтра задач
-    // filter: Filter.ALL
+    ]
   };
 
   render() {
