@@ -41,19 +41,21 @@ export class UsersList extends React.Component {
       {
         id: 1,
         name: "Vasya",
-        phone: "+375299999999"
+        phone: "+375299999999",
+        status: 0
       }
       ,
       {
         id: 2,
         name: "Oleg",
-        phone: "+375259999999"
+        phone: "+375259999999",
+        status: 0
       }
     ],
     userToDelete: null,
     userToEdit: null,
   };
-
+  statuses = ['не покупал', 'одна покупка', 'больше одной покупки'];
   nextId = 3;
 
   render() {
@@ -67,17 +69,19 @@ export class UsersList extends React.Component {
 
   	if (this.state.userToEdit) {
   		return(
-  			<EditUser 
+  			<EditUser
+  				statuses = {this.statuses} 
   				userName={
   					this.state.users.find(user => user.id === this.state.userToEdit).name
   				}
   				userPhone={
   					this.state.users.find(user => user.id === this.state.userToEdit).phone
   				}
-  				onSave={(name, phone) => {
+  				onSave={(name, phone, status) => {
   					const usersCopy = updateUser(this.state.users, this.state.userToEdit, {
 		              name,
-		              phone
+		              phone,
+		              status
 		            });
 		            this.setState({
 		            	users: usersCopy,
@@ -95,20 +99,22 @@ export class UsersList extends React.Component {
 
 	return (
 		<React.Fragment>
-			<AddUser 
-				onSave={(name, phone) => {
+			<AddUser
+				statuses = {this.statuses} 
+				onSave={(name, phone, status) => {
 	            // Creating new uder with name, phone and id
 	            const user = {
 	              id: this.nextId,
 	              name,
-	              phone
+	              phone,
+	              status
 	            };
 
 	            // Add new user in users array
 	            this.setState({
 	              users: addUser(this.state.users, user)
 	            });
-	            console.log(this.nextId);
+	            //console.log(this.nextId);
 	            this.nextId++;
 	          }}
 			/>
@@ -118,6 +124,7 @@ export class UsersList extends React.Component {
 					  	<th>ID</th>
 					  	<th>Name</th>
 					  	<th>Phone</th>
+					  	<th>Status</th>
 				  	</tr>
 			  	</thead>
 			  	<tbody>
@@ -126,6 +133,7 @@ export class UsersList extends React.Component {
 					  	<td>{user.id}</td>
 					  	<td>{user.name}</td>
 					  	<td>{user.phone}</td>
+					  	<td>{this.statuses[user.status]}</td>
 					  	<td>
 					  		<button
 					  			onClick={() => 

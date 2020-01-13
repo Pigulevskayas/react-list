@@ -6,7 +6,9 @@ export class EditUser extends React.Component {
 
 		this.state = {
 			name: this.props.userName,
-			phone: this.props.userPhone
+			phone: this.props.userPhone,
+			status: this.props.status,
+			statuses: this.props.statuses
 		};
 	}
 	render(){
@@ -30,11 +32,25 @@ export class EditUser extends React.Component {
 		            })
 		          }
 		        />
+		        <select
+			        value={this.state.status}
+			        onChange={e =>
+			            this.setState({
+			              status: e.target.value
+			            })
+		            }
+		        >
+		        	{
+		        		this.state.statuses.map((elem, index) => (
+		        			<option key={index} value={index}>{elem}</option>
+		        		))
+		        	}
+		        </select>
 		        <button
 		          onClick={() => {
 		            if (this.state.name && this.state.name.trim() && this.state.phone && this.state.phone.trim()) {
 		            	this.setState({ name: "", phone: "" });
-		                this.props.onSave(this.state.name, this.state.phone);
+		                this.props.onSave(this.state.name, this.state.phone, this.state.status);
 		            }
 		          }}
 		        >

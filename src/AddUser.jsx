@@ -3,7 +3,9 @@ import React from "react";
 export class AddUser extends React.Component {
 	state = {
 	    name: "",
-	    phone: ""
+	    phone: "",
+	    status: "",
+	    statuses: this.props.statuses
 	};
 
 	render(){
@@ -31,12 +33,27 @@ export class AddUser extends React.Component {
 					}
 					// required
 				/>
+				<select
+			        value={this.state.status}
+			        onChange={e =>
+			            this.setState({
+			              status: e.target.value
+			            })
+		            }
+		        >
+		        	{
+		        		this.state.statuses.map((elem, index) => (
+		        			<option key={index} value={index}>{elem}</option>
+		        		))
+		        	}
+		        </select>
 				<button
 					onClick={() => {
 						if (this.state.name && this.state.name.trim() && this.state.phone && this.state.phone.trim()) {
 							this.setState({ name: "" });
 							this.setState({ phone: "" });
-							this.props.onSave(this.state.name, this.state.phone);
+							this.setState({ status: 0 });
+							this.props.onSave(this.state.name, this.state.phone, this.state.status);
 						}
 					}}
 				>
